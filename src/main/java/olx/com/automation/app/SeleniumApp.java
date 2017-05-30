@@ -36,14 +36,14 @@ public class SeleniumApp {
 	 		 eventDriver.register(handler);
 			
 			try {
-				FacebookLoginPage.init(eventDriver);
+				/*FacebookLoginPage.init(eventDriver);
 				FacebookLoginPage.login(eventDriver,"hprnpzahde_1495137612@tfbnw.net", "2008295377");
 				
 				LandingPage.init(driver);
 				LandingPage.loginButton(driver).click();
 				LandingPage.loginFacebookButton(driver);
 				
-				ProfilePage.init(driver);
+				ProfilePage.init(driver);*/
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

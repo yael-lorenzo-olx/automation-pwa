@@ -13,7 +13,7 @@ public class BasePage {
 	protected static WebDriver driver = DriverBuilder.INSTANCE.getDriver();
 	protected static EventFiringWebDriver eventDriver = DriverBuilder.INSTANCE.getEventDriver();
 		
-	public static void search(String text) {
+	public static void search(String text) throws Exception {
 		// TODO Auto-generated method stub
 		HeaderSearch search = new HeaderSearch();
 		search.perform(driver, text);

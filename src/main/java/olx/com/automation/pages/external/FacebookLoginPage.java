@@ -5,21 +5,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
+import olx.com.automation.driver.DriverBuilder;
+
 public class FacebookLoginPage {
 
 	private static  WebElement element = null;
 	private  static String URL = "https://www.facebook.com/login";
+	protected static WebDriver driver = DriverBuilder.INSTANCE.getDriver();
+	protected static EventFiringWebDriver eventDriver = DriverBuilder.INSTANCE.getEventDriver();
 	
 	
-	public static void login(EventFiringWebDriver driver, String userName, String pass) throws Exception
+	public static void login(String userName, String pass) throws Exception
     {
-		element = userNameField(driver);
+		element = userNameField();
 		if (element == null)
 		{
 			throw new Exception("Element not found.");
 		}
 		element.sendKeys(userName);
-		element = passField(driver);
+		element = passField();
 		if (element == null)
 		{
 			throw new Exception("Element not found.");
@@ -28,30 +32,26 @@ public class FacebookLoginPage {
 		element.submit();
     }
 
-    protected static  WebElement userNameField(WebDriver driver)
+    protected static  WebElement userNameField()
     {
         return driver.findElement(By.id("email"));
     }
 
-    protected static WebElement  passField(WebDriver driver)
+    protected static WebElement  passField()
     {
     	return driver.findElement(By.id("pass"));
     }
 
-    protected static WebElement  loginButton(WebDriver driver)
+    protected static WebElement  loginButton()
     {
     	return driver.findElement(By.id("loginbutton"));
     }
 
-	public static void init(EventFiringWebDriver driver) 
+	public static void init() 
 	{
 		driver.get(URL);
 		System.out.println("initializing facebook");
 		//waitUntilReady(driver);
-	}
-	
-	public static void lala(){
-		System.out.println("Lala");
 	}
 
 	/*private  void waitUntilReady(WebDriver driver) 

@@ -1,9 +1,13 @@
 package olx.com.automation.utils;
 
 import java.io.File;
+import java.util.logging.Level;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class FirefoxUtils {
@@ -30,6 +34,13 @@ public class FirefoxUtils {
 		 capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 		   
 		 return capabilities;
+	}
+	
+	public static void enableBrowserLog(DesiredCapabilities caps)
+	{
+		LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.ALL);
+        caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 	}
 }
 
