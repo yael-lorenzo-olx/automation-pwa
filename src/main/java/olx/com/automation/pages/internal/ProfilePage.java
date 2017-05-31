@@ -1,11 +1,14 @@
 package olx.com.automation.pages.internal;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProfilePage extends BasePage {
 	
+	final static Logger LOGGER = Logger.getLogger(ProfilePage.class);
+
 	public static void init()
     {
 		waitUntilReady();

@@ -2,6 +2,7 @@ package olx.com.automation.testCase;
 
 import java.net.MalformedURLException;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -17,19 +18,15 @@ import olx.com.automation.pages.internal.ProfilePage;
 import olx.com.automation.utils.DriverUtils;
 
 @Listeners(FailTestScreenshotListener.class)
-public class TestCase1 {
+public class SearchLoggedIn {
 	
 	private WebDriver driver;
+	final static Logger LOGGER = Logger.getLogger(LandingPage.class);
 	
 	@Test
-	public void f() throws Exception
+	public void TestSearchLoggedIn() throws Exception
 	{	
-		try {
-			Dimension scrDim = driver.manage().window().getSize();
-			System.out.println("Screen height: " + scrDim.height);
-			System.out.println("Screen width: " + scrDim.width);
-			
-			//setCapability("screenResolution", "1024x768");
+		try {	
 			
 			FacebookLoginPage.init();
 			FacebookLoginPage.login("hprnpzahde_1495137612@tfbnw.net", "2008295377");
@@ -38,10 +35,6 @@ public class TestCase1 {
 			LandingPage.init();
 			LandingPage.checkIfNonProduction();
 			LandingPage.closePopupOk();
-		
-			scrDim = driver.manage().window().getSize();
-			System.out.println("Screen height: " + scrDim.height);
-			System.out.println("Screen width: " + scrDim.width);
 			
 			DriverUtils.saveScreenShot(driver, System.getProperty("user.dir"), "init_landing_page");
 			LandingPage.login();
@@ -67,6 +60,9 @@ public class TestCase1 {
 	{
 		driver = DriverBuilder.INSTANCE.getDriver(new Dimension(1073, 800));
 		//driver = DriverBuilder.INSTANCE.getDriver();
+		LOGGER.info("Start test: " + this.getClass().getName());
+		Dimension scrDim = driver.manage().window().getSize();
+		LOGGER.info(String.format("Screen size is: %s width x %s height.", scrDim.width, scrDim.height));
 	}
 	
 	@AfterMethod
@@ -74,5 +70,6 @@ public class TestCase1 {
 	{
 		DriverBuilder.INSTANCE.unregisterEventHandler();
 		driver.close();
+		LOGGER.info("End test: " + this.getClass().getName());
 	}
 }
