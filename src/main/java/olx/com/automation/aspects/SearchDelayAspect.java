@@ -6,11 +6,11 @@ import org.aspectj.lang.annotation.*;
 import olx.com.automation.utils.PageUtils;
 
 @Aspect
-public class PageDelayAspect {
+public class SearchDelayAspect {
 
-	//private static int DEFAULT_WAITING_TIME = 500;
+	private static int DEFAULT_WAITING_TIME = 3000;
 	
-	@Pointcut("execution(* olx.com.automation.pages..*(..))")
+	@Pointcut("execution(* olx.com.automation.pages.components.HeaderSearch.perform(..))")
 	public void waitPageLoad() {}
 
 	@After("waitPageLoad()")
@@ -19,7 +19,6 @@ public class PageDelayAspect {
 		/*try {
 			Thread.sleep(DEFAULT_WAITING_TIME);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		PageUtils.checkPageIsReady();

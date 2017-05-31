@@ -7,6 +7,8 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.TestListenerAdapter;
 
+import olx.com.automation.utils.DriverUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -51,20 +53,7 @@ public class FailTestScreenshotListener<T> extends TestListenerAdapter {
             return;
         }
 
-        File f = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-        try {
-            final long timestamp = new Date().getTime();
-            Path screenshotPath = Paths.get(currentDir, "target", "screenshot_" + tr.getMethod().getMethodName() + "_" + timestamp + ".png");
-            System.out.println("copying " + screenshotPath);
-            Files.copy(f.toPath(), screenshotPath, StandardCopyOption.REPLACE_EXISTING);
-            
-            String path = "<img src=\"file://" + screenshotPath + "\" alt=\"\" />";
-            Reporter.log(path);
-            
-        } catch (IOException e) {
-            System.err.println("error during the screenshot copy file operation:" + e.getMessage());
-        }
-        
+        DriverUtils.saveScreenShot(webDriver, currentDir, tr.getMethod().getMethodName());
         
 
     }

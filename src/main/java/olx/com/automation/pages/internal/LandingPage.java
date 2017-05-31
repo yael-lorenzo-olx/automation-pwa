@@ -3,14 +3,12 @@ package olx.com.automation.pages.internal;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LandingPage {
+public class LandingPage extends BasePage {
 
-	private static WebElement element = null;
 	private  static String URL = "https://www.olx.com.gh";
 
 	/**
@@ -18,7 +16,7 @@ public class LandingPage {
 	 * @param driver
 	 * @return
 	 */
-	public static boolean checkIfNonProduction(WebDriver driver)
+	public static boolean checkIfNonProduction()
 	{
 		element = driver.findElement(By.xpath("//div[@id='container']/span[contains(.,'staging')]"));
 		if (element != null)
@@ -29,14 +27,14 @@ public class LandingPage {
 		return false;
 	}
 	
-	public static WebElement loginButton(WebDriver driver) throws InterruptedException
+	public static void login() throws InterruptedException
     {
 		element = driver.findElement(By.xpath("//span[@class='signINText']"));
-		//Thread.sleep(5000);
-        return element;
+		Thread.sleep(3000);
+        element.click();
     }
 
-	public static WebElement loginFacebookButton(WebDriver driver)
+	public static WebElement loginFacebookButton()
     {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='kep-login-facebook metro']")));
@@ -45,16 +43,16 @@ public class LandingPage {
         return element;
     }
 	
-	public static void init(WebDriver driver) throws Exception 
+	public static void init() throws Exception 
 	{
 		driver.get(URL);
-		//Thread.sleep(5000);
+		//Thread.sleep(3000);
 		//waitUntilReady(driver);
-		closePopupOk(driver);
-		checkIfNonProduction(driver);
+		//closePopupOk();
+		//checkIfNonProduction();
 	}
 
-	private static void closePopupOk(WebDriver driver) 
+	public static void closePopupOk() 
 	{
 		List<WebElement> elements = driver.findElements(By.xpath("//button/span[contains(.,'Ok')]"));
 		if (elements.isEmpty())
@@ -66,10 +64,10 @@ public class LandingPage {
 		
 	}
 	
-	public static void waitUntilReady(WebDriver driver) 
+	/*public static void waitUntilReady(WebDriver driver) 
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*")));
-	}
+	}*/
 }
 
