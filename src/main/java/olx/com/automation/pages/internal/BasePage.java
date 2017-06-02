@@ -10,9 +10,15 @@ import olx.com.automation.pages.components.HeaderComponent;
 public class BasePage {
 
 	protected static WebElement element = null;
-	protected static WebDriver driver = DriverBuilder.INSTANCE.getDriver();
-	protected static EventFiringWebDriver eventDriver = DriverBuilder.INSTANCE.getEventDriver();
-		
+	protected static WebDriver driver;
+	protected static EventFiringWebDriver eventDriver;
+	
+	public static void initializeDrivers()
+	{
+		driver = DriverBuilder.INSTANCE.getDriver();
+		eventDriver = DriverBuilder.INSTANCE.getEventDriver();
+	}
+	
 	public static void search(String text) throws Exception 
 	{
 		// TODO Auto-generated method stub

@@ -45,8 +45,9 @@ public class LandingPage extends BasePage {
         return element;
     }
 	
-	public static void init() throws Exception 
+	public static void init()
 	{
+		initializeDrivers();
 		driver.get(URL);
 		//Thread.sleep(3000);
 		//waitUntilReady(driver);

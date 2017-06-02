@@ -14,8 +14,8 @@ public class FacebookLoginPage {
 
 	private static  WebElement element = null;
 	private  static String URL = "https://www.facebook.com/login";
-	protected static WebDriver driver = DriverBuilder.INSTANCE.getDriver();
-	protected static EventFiringWebDriver eventDriver = DriverBuilder.INSTANCE.getEventDriver();
+	protected static WebDriver driver;
+	protected static EventFiringWebDriver eventDriver;
 	public static final String EMAIL = "email";
 	public static final String PASS = "pass";
 	
@@ -51,6 +51,8 @@ public class FacebookLoginPage {
 
 	public static void init() 
 	{
+		driver = DriverBuilder.INSTANCE.getDriver();
+		eventDriver = DriverBuilder.INSTANCE.getEventDriver();
 		driver.get(URL);
 		System.out.println("initializing facebook");
 		//waitUntilReady(driver);

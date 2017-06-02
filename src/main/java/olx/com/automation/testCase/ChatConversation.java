@@ -26,14 +26,14 @@ import olx.com.automation.utils.DriverUtils;
 public class ChatConversation {
 	
 	private WebDriver driver;
-	final static Logger LOGGER = Logger.getLogger(LandingPage.class);
+	final static Logger LOGGER = Logger.getLogger(ChatConversation.class);
 	
 	@Test
 	public void TestChat() throws Exception
 	{	
 		try {	
 			
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			
 			FacebookAction.login("ugwdhkzbyy_1496174948@tfbnw.net", "2016388329");
 			
@@ -48,20 +48,24 @@ public class ChatConversation {
 			
 			//ChatPage.init();
 			String uniqueID = UUID.randomUUID().toString();
+			ChatPage.init();
 			ChatPage.sendMessage(uniqueID);
 			ChatPage.validateSentMessage(uniqueID);
 			DriverUtils.saveScreenShot(driver, System.getProperty("user.dir"), "chat_sent");
 			
 			driver.close();
-			
+			driver.quit();
 			///////////////////////////  >>>> user number 2
-			
+		
+			driver = DriverBuilder.INSTANCE.getDriver();
+				
 			FacebookAction.login("hprnpzahde_1495137612@tfbnw.net", "2008295377");
 			LandingPageAction.loginFacebook();
 			ProfilePage.init();
+			DriverUtils.saveScreenShot(driver, System.getProperty("user.dir"), "profile_2");
 			ProfilePage.goToChat();
 			DriverUtils.saveScreenShot(driver, System.getProperty("user.dir"), "click_on_chat_2");
-			ChatPage.init();
+			ChatPage.welcome();
 			ChatPage.open(uniqueID);
 			DriverUtils.saveScreenShot(driver, System.getProperty("user.dir"), "click_on_chat_2_opened");
 			

@@ -14,6 +14,7 @@ public class ItemPage extends BasePage {
 
 	public static void init(String url) throws Exception 
 	{
+		initializeDrivers();
 		driver.get(url);
 	}
 

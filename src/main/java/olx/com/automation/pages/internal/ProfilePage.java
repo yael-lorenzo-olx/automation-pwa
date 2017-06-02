@@ -8,6 +8,7 @@ public class ProfilePage extends BasePage {
 
 	public static void init()
     {
+		initializeDrivers();
 		locateProfileMenu();
     }
 	

@@ -2,6 +2,7 @@ package olx.com.automation.driver;
 
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -9,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import olx.com.automation.events.WebEventHandler;
+import olx.com.automation.testCase.ChatConversation;
 import olx.com.automation.utils.FirefoxUtils;
 
 // DriverBuilder.INSTANCE is a singleton pattern in Java with enum
@@ -23,26 +25,19 @@ public enum DriverBuilder {
 	private EventFiringWebDriver eventDriver;
 	private WebEventHandler handler;
 	private Dimension dimension;
+	final static Logger LOGGER = Logger.getLogger(ChatConversation.class);
 		 
     DriverBuilder() 
     {
-		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/geckodriver");
-
-        try {
-        	DesiredCapabilities caps = FirefoxUtils.setHeader("x-origin-panamera", "staging");
-        	FirefoxUtils.enableBrowserLog(caps);
-        	driver = new RemoteWebDriver(new URL(node), caps);
-        	
-        	eventDriver = new EventFiringWebDriver(driver);
-        	handler = new WebEventHandler();
-        	eventDriver.register(handler);
-        } catch (Exception e) {
-            throw new ExceptionInInitializerError(e);
-        }
+    	createDriver();
     }
     
     public WebDriver getDriver() 
     { 
+    	if (isDriverClosed())
+    	{
+    		createDriver();
+		}
     	if (dimension != null)
     	{
     		driver.manage().window().setSize(dimension);
@@ -59,9 +54,36 @@ public enum DriverBuilder {
 
 	public WebDriver getDriver(Dimension dimension) 
 	{
+		if (isDriverClosed())
+    	{
+    		createDriver();
+		}
 		this.dimension = dimension;
 		driver.manage().window().setSize(dimension);
 		return driver;
+	}
+	
+	private void createDriver()
+	{
+		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/geckodriver");
+
+        try {
+        	DesiredCapabilities caps = FirefoxUtils.setHeader("x-origin-panamera", "staging");
+        	FirefoxUtils.enableBrowserLog(caps);
+        	driver = new RemoteWebDriver(new URL(node), caps);
+        	
+        	eventDriver = new EventFiringWebDriver(driver);
+        	handler = new WebEventHandler();
+        	eventDriver.register(handler);
+        	//LOGGER.info("New driver instantiated");
+        } catch (Exception e) {
+            throw new ExceptionInInitializerError(e);
+        }
+	}
+	
+	public boolean isDriverClosed()
+	{
+		return ((RemoteWebDriver) driver).getSessionId() == null;
 	}
     
 }

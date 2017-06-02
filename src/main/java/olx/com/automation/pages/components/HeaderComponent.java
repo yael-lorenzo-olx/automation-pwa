@@ -15,8 +15,8 @@ import olx.com.automation.utils.DriverUtils;
 public class HeaderComponent {
 
 	private static final String PROFILE_BUTTON = "//span[contains(@class, 'DropDown')]";
-	private static final String CHAT_BUTTON = "//a[@href='/chat']";
-	private static WebDriver driver = DriverBuilder.INSTANCE.getDriver();
+	private static final String CHAT_BUTTON = "//a[@href='/chat']/span";
+	private static WebDriver driver;
 	private static final String SEARCH_BOX = "//input[@placeholder='What are you looking for?']";
 	// sell
 	// search
@@ -25,6 +25,7 @@ public class HeaderComponent {
 	
 	public static void performSearch(String textToSearch) 
 	{
+		driver = DriverBuilder.INSTANCE.getDriver();
 		WebElement element = driver.findElement(By.xpath(SEARCH_BOX));
 		if (element == null)
 		{
@@ -53,8 +54,8 @@ public class HeaderComponent {
 
 	public static void locateProfileMenu()
 	{
-	
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		driver = DriverBuilder.INSTANCE.getDriver();
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_BUTTON)));	
 		driver.findElement(By.xpath(PROFILE_BUTTON));
 		System.out.println("Found profile text!");
@@ -62,10 +63,11 @@ public class HeaderComponent {
 
 	public static void goToChat() 
 	{
-		List<WebElement> elements = driver.findElements(By.id(CHAT_BUTTON));
+		driver = DriverBuilder.INSTANCE.getDriver();
+		List<WebElement> elements = driver.findElements(By.xpath(CHAT_BUTTON));
     	if (elements.isEmpty())
     	{
-    		throw new NoSuchElementException("By id: " + CHAT_BUTTON);
+    		throw new NoSuchElementException("By xpath: " + CHAT_BUTTON);
     	}
         elements.get(0).click();
 		

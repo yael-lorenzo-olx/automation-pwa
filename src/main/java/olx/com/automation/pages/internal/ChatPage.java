@@ -20,8 +20,13 @@ public class ChatPage extends BasePage {
 
 	public static void init()
 	{
+		initializeDrivers();
+	}
+	
+	public static void welcome()
+	{
+		init();
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(WELCOME)));
 	}
 
@@ -43,6 +48,8 @@ public class ChatPage extends BasePage {
 	
 	public static void validateSentMessage(String message)
 	{
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(SENT_MESSAGE, message))));
 		List<WebElement> elements = driver.findElements(By.xpath(String.format(SENT_MESSAGE, message)));
     	if (elements.isEmpty())
     	{
